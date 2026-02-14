@@ -1,3 +1,7 @@
 spring:
   application:
     name: anime-service
+
+server:
+  servlet:
+    context-path: / # Its recomended to use a placeholder, like: /${spring.application.name}
