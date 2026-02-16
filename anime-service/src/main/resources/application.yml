@@ -2,9 +2,13 @@ spring:
   application:
     name: anime-service
 
+# Percebemos a importância de threads virtuais quando trabalhando com entrada e saída de dados (conexão com o db,
+# serviço ou lendo um arquivo), ao contrário de tasks que utilizam mais a CPU, onde não vemos tanto ganho de desempenho.
   threads:
     virtual:
       enabled: true
+
+
 
 server:
   servlet:
@@ -13,4 +17,4 @@ server:
     include-stacktrace: on_param
   tomcat:
     threads:
-      m
+      max: 20 # plataform threads
