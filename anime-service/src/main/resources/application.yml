@@ -2,6 +2,15 @@ spring:
   application:
     name: anime-service
 
+  threads:
+    virtual:
+      enabled: true
+
 server:
   servlet:
     context-path: / # Its recomended to use a placeholder, like: /${spring.application.name}
+  error:
+    include-stacktrace: on_param
+  tomcat:
+    threads:
+      m
