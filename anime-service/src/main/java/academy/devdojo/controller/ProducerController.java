@@ -3,6 +3,8 @@ package academy.devdojo.controller;
 import academy.devdojo.domain.Producer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,13 +21,13 @@ public class ProducerController {
         if (name == null) return producers;
 
         return producers.stream()
-                .filter(anime -> anime.getName().equalsIgnoreCase(name)).toList();
+                .filter(producer -> producer.getName().equalsIgnoreCase(name)).toList();
     }
 
     @GetMapping("{id}")
     public Producer findById(@PathVariable long id) {
         return Producer.getProducers().stream()
-                .filter(anime -> anime.getId().equals(id))
+                .filter(producer -> producer.getId().equals(id))
                 .findFirst().orElse(null);
     }
 
@@ -36,10 +38,10 @@ public class ProducerController {
      * @param headers the HTTP headers required for the request (x-api-key)
      */
     @PostMapping(produces = "application/json", consumes = "application/json", headers = "x-api-key")
-    public Producer save(@RequestBody Producer anime, @RequestHeader HttpHeaders headers) {
+    public ResponseEntity<Producer> save(@RequestBody Producer producer, @RequestHeader HttpHeaders headers) {
         log.info("{}", headers);
-        anime.setId(ThreadLocalRandom.current().nextLong(100_000));
-        Producer.getProducers().add(anime);
-        return anime;
+        producer.setId(ThreadLocalRandom.current().nextLong(100_000));
+        Producer.getProducers().add(producer);
+        return ResponseEntity.status(HttpStatus.CREATED).body(producer);
     }
 }
