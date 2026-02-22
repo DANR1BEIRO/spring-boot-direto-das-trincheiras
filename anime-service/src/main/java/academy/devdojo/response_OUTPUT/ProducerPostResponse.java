@@ -1,4 +1,4 @@
-package academy.devdojo.response;
+package academy.devdojo.response_OUTPUT;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Builder
-public class ProducerGetResponse {
+public class ProducerPostResponse {
     private Long id;
     private String name;
     private LocalDateTime createdAt;

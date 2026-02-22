@@ -2,13 +2,15 @@ spring:
   application:
     name: anime-service
 
-# Percebemos a importância de threads virtuais quando trabalhando com entrada e saída de dados (conexão com o db,
-# serviço ou lendo um arquivo), ao contrário de tasks que utilizam mais a CPU, onde não vemos tanto ganho de desempenho.
+  # Percebemos a importância de threads virtuais quando trabalhando com entrada e saída de dados (conexão com o db,
+  # serviço ou lendo um arquivo), ao contrário de tasks que utilizam mais a CPU, onde não vemos tanto ganho de desempenho.
   threads:
     virtual:
       enabled: true
 
-
+logging:
+  level:
+    academy.devdojo: debug
 
 server:
   servlet:
