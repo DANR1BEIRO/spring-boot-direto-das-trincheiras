@@ -22,12 +22,11 @@ public class AnimeController {
     public ResponseEntity<List<AnimeGetResponse>> listAll(@RequestParam(required = false) String name) {
         log.debug("Request to list all animes, param name '{}'", name);
 
-        List<AnimeGetResponse> response = Anime.getAnimes().stream()
-                .filter(anime -> anime == null || anime.getName().equalsIgnoreCase(name))
-                .map(MAPPER::toAnimeGetResponse)
+        List<Anime> animesFiltered = Anime.getAnimes().stream()
+                .filter(anime -> name == null || anime.getName().equalsIgnoreCase(name))
                 .toList();
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(MAPPER.toAnimeGetResponseList(animesFiltered));
     }
 
     @GetMapping("{id}")
