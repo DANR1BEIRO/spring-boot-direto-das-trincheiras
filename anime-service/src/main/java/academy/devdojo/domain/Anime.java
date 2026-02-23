@@ -1,19 +1,20 @@
 package academy.devdojo.domain;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.atomic.AtomicLong;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Anime {
+    @EqualsAndHashCode.Include
     private Long id;
     private String name;
     private static List<Anime> animes = new ArrayList<>();

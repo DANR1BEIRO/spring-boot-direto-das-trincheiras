@@ -27,6 +27,7 @@ public class HeroController {
                 .filter(names::contains)
                 .toList();
     }
+
     @GetMapping("{name}")
     public String findByName(@PathVariable String name) {
         return HEROES
