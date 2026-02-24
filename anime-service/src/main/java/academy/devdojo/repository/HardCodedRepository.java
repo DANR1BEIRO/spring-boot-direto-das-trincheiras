@@ -26,31 +26,6 @@ public class HardCodedRepository {
         PRODUCERS.addAll(List.of(mappa, kyotoAnimation, madHouse));
     }
 
-<<<<<<< HEAD
-    public static List<Producer> listAll() {
-        return PRODUCERS;
-    }
-
-    public static List<Producer> listByName(Producer request) {
-        return PRODUCERS.stream().filter(producer -> producer.getName().equalsIgnoreCase(request.getName())).toList();
-    }
-
-    public static Optional<Producer> findById(Long id) {
-        return PRODUCERS.stream().filter(producer -> producer.getId().equals(id)).findFirst();
-    }
-
-    public static void save(Producer producer) {
-        PRODUCERS.add(producer);
-    }
-
-    public static void deleteById(Long id) {
-        PRODUCERS.stream().filter(producer -> producer.getId().equals(id)).findFirst().ifPresent(PRODUCERS::remove);
-    }
-
-    public void update(Producer producer) {
-        PRODUCERS.remove(producer);
-        PRODUCERS.add(producer);
-=======
     public List<Producer> findAll() {
         return PRODUCERS;
     }
@@ -75,7 +50,6 @@ public class HardCodedRepository {
     public void update(Producer producer) {
         delete(producer);
         save(producer);
->>>>>>> feat/27-mvc-pattern-02-service
     }
 }
 
