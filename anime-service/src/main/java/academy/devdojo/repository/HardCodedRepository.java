@@ -26,29 +26,30 @@ public class HardCodedRepository {
         PRODUCERS.addAll(List.of(mappa, kyotoAnimation, madHouse));
     }
 
-    public static List<Producer> listAll() {
+    public List<Producer> findAll() {
         return PRODUCERS;
     }
 
-    public static List<Producer> listByName(Producer request) {
-        return PRODUCERS.stream().filter(producer -> producer.getName().equalsIgnoreCase(request.getName())).toList();
+    public List<Producer> findByName(String request) {
+        return PRODUCERS.stream().filter(producer -> producer.getName().equalsIgnoreCase(request)).toList();
     }
 
-    public static Optional<Producer> findById(Long id) {
+    public Optional<Producer> findById(Long id) {
         return PRODUCERS.stream().filter(producer -> producer.getId().equals(id)).findFirst();
     }
 
-    public static void save(Producer producer) {
+    public Producer save(Producer producer) {
         PRODUCERS.add(producer);
+        return producer;
     }
 
-    public static void deleteById(Long id) {
-        PRODUCERS.stream().filter(producer -> producer.getId().equals(id)).findFirst().ifPresent(PRODUCERS::remove);
+    public void delete(Producer producer) {
+        PRODUCERS.remove(producer);
     }
 
     public void update(Producer producer) {
-        PRODUCERS.remove(producer);
-        PRODUCERS.add(producer);
+        delete(producer);
+        save(producer);
     }
 }
 
