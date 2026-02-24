@@ -15,7 +15,7 @@ import java.util.Optional;
 @Setter
 @Repository
 @ToString
-public class HardCodedRepository {
+public class ProducerHardCodedRepository {
 
     private static final List<Producer> PRODUCERS = new ArrayList<>();
 

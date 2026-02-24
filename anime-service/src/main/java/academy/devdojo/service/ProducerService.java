@@ -1,17 +1,17 @@
 package academy.devdojo.service;
 
 import academy.devdojo.domain.Producer;
-import academy.devdojo.repository.HardCodedRepository;
+import academy.devdojo.repository.ProducerHardCodedRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
 public class ProducerService {
-    private final HardCodedRepository repository;
+    private final ProducerHardCodedRepository repository;
 
     public ProducerService() {
-        this.repository = new HardCodedRepository();
+        this.repository = new ProducerHardCodedRepository();
     }
 
     public List<Producer> findAll(String name) {
