@@ -21,7 +21,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class ProducerController {
-    private static final ProducerMapper MAPPER = ProducerMapper.INSTANCE;
+    private final ProducerMapper mapper;
     private final ProducerService service;
 
     @GetMapping()
@@ -29,7 +29,7 @@ public class ProducerController {
         log.debug("Request to list all producers. Param name '{}'", name);
         List<Producer> producers = service.findAll(name);
 
-        List<ProducerGetResponse> producerGetResponses = MAPPER.toProducerGetResponseList(producers);
+        List<ProducerGetResponse> producerGetResponses = mapper.toProducerGetResponseList(producers);
 
         return ResponseEntity.ok(producerGetResponses);
     }
@@ -39,7 +39,7 @@ public class ProducerController {
         log.debug("Request to find producer by id: '{}'", id);
 
         Producer producer = service.findByIdOrThrowNotFound(id);
-        ProducerGetResponse producerGetResponse = MAPPER.toProducerGetResponse(producer);
+        ProducerGetResponse producerGetResponse = mapper.toProducerGetResponse(producer);
         return ResponseEntity.ok(producerGetResponse);
     }
 
@@ -47,9 +47,9 @@ public class ProducerController {
     public ResponseEntity<ProducerPostResponse> save(@RequestBody ProducerPostRequest producerPostRequest, @RequestHeader HttpHeaders headers) {
         log.debug("Request to save producer: '{}'", producerPostRequest);
 
-        var producer = MAPPER.toProducer(producerPostRequest);
+        var producer = mapper.toProducer(producerPostRequest);
         Producer producerSaved = service.save(producer);
-        ProducerPostResponse producerPostResponse = MAPPER.toProducerPostResponse(producerSaved);
+        ProducerPostResponse producerPostResponse = mapper.toProducerPostResponse(producerSaved);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(producerPostResponse);
     }
@@ -67,7 +67,7 @@ public class ProducerController {
     public ResponseEntity<Void> update(@RequestBody ProducerPutRequest request) {
         log.debug("Request to update producer");
 
-        Producer producerToUpdate = MAPPER.toProducer(request);
+        Producer producerToUpdate = mapper.toProducer(request);
         service.update(producerToUpdate);
         return ResponseEntity.noContent().build();
     }
