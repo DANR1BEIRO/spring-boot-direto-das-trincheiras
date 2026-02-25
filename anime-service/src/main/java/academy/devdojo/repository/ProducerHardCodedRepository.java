@@ -1,9 +1,6 @@
 package academy.devdojo.repository;
 
 import academy.devdojo.domain.Producer;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -11,10 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Getter
-@Setter
 @Repository
-@ToString
 public class ProducerHardCodedRepository {
 
     private static final List<Producer> PRODUCERS = new ArrayList<>();
