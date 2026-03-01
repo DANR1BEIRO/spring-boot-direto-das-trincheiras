@@ -74,6 +74,55 @@ class ProducerHardCodedRepositoryTest {
         List<Producer> producerListFilteredByName = repository.findByName(expectedProducer.getName());
         Assertions.assertThat(producerListFilteredByName).contains(expectedProducer);
     }
+
+    @Test
+    @DisplayName("save creates a producer")
+    @Order(5)
+    void save_CreatesAProducer_WhenSuccessful() {
+        BDDMockito.when(producerData.getProducers()).thenReturn(producerList);
+
+        Producer producerToSave = Producer.builder().id(100L).name("TV manchete").createdAt(LocalDateTime.now()).build();
+        Producer producer = repository.save(producerToSave);
+
+        Assertions.assertThat(producer).isEqualTo(producerToSave).hasNoNullFieldsOrProperties();
+
+        Optional<Producer> producerSavedOptional = repository.findById(producer.getId());
+
+        Assertions.assertThat(producerSavedOptional).isPresent().contains(producerToSave);
+    }
+
+    @Test
+    @DisplayName("delete removes a producer")
+    @Order(6)
+    void delete_RemoveProducer_WhenSuccessful() {
+        BDDMockito.when(producerData.getProducers()).thenReturn(producerList);
+
+        Producer producerToDelete = producerList.getFirst();
+        repository.delete(producerToDelete);
+
+        List<Producer> allProducers = repository.findAll();
+
+        Assertions.assertThat(allProducers).isNotEmpty().doesNotContain(producerToDelete);
+    }
+
+    @Test
+    @DisplayName("update updates a producer")
+    @Order(7)
+    void update_UpdateProducer_WhenSuccessful() {
+        BDDMockito.when(producerData.getProducers()).thenReturn(producerList);
+
+        Producer producerToUpdate = producerList.getFirst();
+        producerToUpdate.setName("Aniplax");
+
+        repository.update(producerToUpdate);
+
+        Assertions.assertThat(producerList).contains(producerToUpdate);
+
+        Optional<Producer> producerUpdated = repository.findById(producerToUpdate.getId());
+
+        Assertions.assertThat(producerUpdated).isPresent();
+        Assertions.assertThat(producerUpdated.get().getName()).isEqualTo(producerToUpdate.getName());
+    }
 }
 
 
