@@ -23,14 +23,14 @@ class ProducerHardCodedRepositoryTest {
 
     @Mock
     private ProducerData producerData;
-    private final List<Producer> producerList = new ArrayList<>();
+    private List<Producer> producerList;
 
     @BeforeEach
     void init() {
         var ufotable = Producer.builder().id(1L).name("Ufotable").createdAt(LocalDateTime.now()).build();
         var toeyAnimation = Producer.builder().id(2L).name("ToeyAnimation").createdAt(LocalDateTime.now()).build();
         var ghibli = Producer.builder().id(3L).name("Studio Ghibli").createdAt(LocalDateTime.now()).build();
-        producerList.addAll(List.of(ufotable, toeyAnimation, ghibli));
+        producerList = new ArrayList<>(List.of(ufotable, toeyAnimation, ghibli));
     }
 
     @Test

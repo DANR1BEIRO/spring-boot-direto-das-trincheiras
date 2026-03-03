@@ -24,14 +24,15 @@ class AnimeHardCodedRepositoryTest {
 
     @Mock
     AnimeData animeData;
-    private final List<Anime> animeList = new ArrayList<>();
+    private List<Anime> animeList;
 
     @BeforeEach
     void init() {
         var fma = Anime.builder().id(1L).name("Fullmetal Alchemist").build();
         var attackOnTitan = Anime.builder().id(2L).name("Attack on Titan").build();
         var cowboyBebop = Anime.builder().id(3L).name("Cowboy Bebop").build();
-        animeList.addAll(List.of(fma, attackOnTitan, cowboyBebop));
+        animeList = new ArrayList<>(List.of(fma, attackOnTitan, cowboyBebop));
+
         BDDMockito.when(animeData.getAnimes()).thenReturn(animeList);
     }
 
@@ -39,8 +40,8 @@ class AnimeHardCodedRepositoryTest {
     @DisplayName("findAll returns a list with all animes")
     void findAll_ReturnsAllAnimes_WhenSuccessful() {
 
-        List<Anime> allAnimes = repository.findAll();
-        Assertions.assertThat(allAnimes).isNotNull().hasSameElementsAs(animeList);
+        List<Anime> animes = repository.findAll();
+        Assertions.assertThat(animes).isNotNull().hasSameElementsAs(animeList);
     }
 
     @Test
@@ -72,10 +73,56 @@ class AnimeHardCodedRepositoryTest {
         List<Anime> listByName = repository.findByName(anime.getName());
 
         Assertions.assertThat(listByName).contains(anime);
-
     }
 
-    // TODO: Implementar testes unitarios para todos metodos restantes
+    @Test
+    @DisplayName("findByName returns an empty list when name is null")
+    void findByName_ReturnsAnEmptyList_WhenNameIsNull() {
 
+        List<Anime> animeNull = repository.findByName(null);
 
+        Assertions.assertThat(animeNull).isNotNull();
+    }
+
+    @Test
+    @DisplayName("save creates a new anime")
+    void save_CreatesANewAnime_WhenSuccessful() {
+        Anime animeToSave = Anime.builder().id(ThreadLocalRandom.current().nextLong(1000)).name("Samurai Champloo").build();
+        Anime anime = repository.save(animeToSave);
+
+        Assertions.assertThat(anime).isEqualTo(animeToSave).hasNoNullFieldsOrProperties();
+
+        Optional<Anime> optionalAnime = repository.findById(anime.getId());
+
+        Assertions.assertThat(optionalAnime).isPresent().contains(anime);
+    }
+
+    @Test
+    @DisplayName("delete removes an anime")
+    void delete_RemovesAnAnime_WhenSuccessful() {
+        Anime animeToDelete = animeList.getFirst();
+        repository.delete(animeToDelete);
+
+        List<Anime> animes = repository.findAll();
+
+        Assertions.assertThat(animes).isNotEmpty().doesNotContain(animeToDelete);
+    }
+
+    @Test
+    @DisplayName("update updates an anime")
+    void update_UpdatesAnAnime_WhenSuccessful() {
+        Anime animeToUpdate = animeList.getFirst();
+        animeToUpdate.setName("Hellsing");
+
+        repository.update(animeToUpdate);
+
+        Assertions.assertThat(animeList).contains(animeToUpdate);
+
+        Optional<Anime> animeUpdated = repository.findById(animeToUpdate.getId());
+
+        Assertions.assertThat(animeUpdated).isPresent();
+        Assertions.assertThat(animeUpdated.get().getId()).isEqualTo(animeToUpdate.getId());
+    }
 }
+
+
