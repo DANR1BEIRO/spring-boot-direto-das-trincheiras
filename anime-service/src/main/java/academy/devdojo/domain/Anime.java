@@ -10,6 +10,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @Setter
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString
 public class Anime {
     @EqualsAndHashCode.Include
     private Long id;
