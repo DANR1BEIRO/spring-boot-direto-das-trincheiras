@@ -16,8 +16,8 @@ import java.util.Optional;
 public class ProducerHardCodedRepository {
 
     private final ProducerData producerData;
-    @Qualifier(value = "testandoOMapeamentoDoBeanName")
-    private final Connection connection;
+    /*@Qualifier(value = "testandoOMapeamentoDoBeanName")
+    private final Connection connection;*/
 
 
     public List<Producer> findAll() {
@@ -25,7 +25,7 @@ public class ProducerHardCodedRepository {
     }
 
     public List<Producer> findByName(String request) {
-        log.debug(connection);
+        //log.debug(connection);
         return producerData.getProducers().stream().filter(producer -> producer.getName().equalsIgnoreCase(request)).toList();
     }
 
